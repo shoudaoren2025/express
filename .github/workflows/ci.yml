@@ -13,7 +13,7 @@ concurrency:
 env:
   TZ: Asia/Shanghai
   TASK_COUNT: 1000
-  # node index.js --count 1160
+  # node index.js --count 1000
 
 jobs:
   prepare-matrix:
@@ -23,7 +23,7 @@ jobs:
     steps:
       - id: set-matrix
         run: |
-          if [ -z "${{ inputs.ip }}" ]; then
+          if [ -z "${{ inputs.ip }}" ] || [ "${{ inputs.ip }}" = "0.0.0.0" ]; then
             echo "ip为空"
             exit 1
           fi
