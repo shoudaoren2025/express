@@ -12,7 +12,7 @@ concurrency:
 
 env:
   TZ: Asia/Shanghai
-  TASK_COUNT: 1160
+  TASK_COUNT: 1000
   # node index.js --count 1160
 
 jobs:
@@ -23,6 +23,11 @@ jobs:
     steps:
       - id: set-matrix
         run: |
+          if [ -z "${{ inputs.ip }}" ]; then
+            echo "ip为空"
+            exit 1
+          fi
+        
           count=20
           ids=$(jq -c -n --argjson n "$count" '[range(1; $n+1)]')
           echo "ids=$ids" >> $GITHUB_OUTPUT
